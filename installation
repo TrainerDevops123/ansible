@@ -1,0 +1,80 @@
+Ansible Installation
+
+Setup - create ec2 instances, hostname, ansadmin user, 
+	add user to sudoers
+	generate ssh keys
+	enable passwd based login
+	install ansible
+
+EC2 instance - linux 2 - t2 micro - tag "key - name", "value - Ansible_Server"
+SG - open ports 8080 & 8081-9000
+
+
+sudo su 
+vi .etc/hostname -> ansible-server
+reboot
+
+vi /etc/ssh/sshd_config
+	/Password ##search for password
+	PasswordAuthentication yes ##uncomment this
+        #PasswordAutentication no  ##comment this
+
+service sshd reload
+
+sudo su - ansadmin
+ssh-keygen
+
+----------
+INSTALLATION
+-----------
+yum install ansible 
+sudo amazon-linux-extras install ansible2
+python --version
+ansible --version
+
+
+------
+NODE
+-------
+
+vi /etc/ssh/sshd_config
+	/Password ##search for password
+	PasswordAuthentication yes ##uncomment this
+        #PasswordAutentication no  ##comment this
+
+service sshd reload
+---------
+ANSIBLE
+vi /etc/ansible/hosts
+   <add private ip of docker host>
+
+sudo su ansadmin
+cd .ssh/id_rsa.pub
+cd ..
+ssh-copy-id <private ip of docker instance>
+------------
+
+NODE
+
+cd .ssh
+	authorized_keys
+cat authorized_keys
+
+------------------------
+
+ANSIBLE
+
+ansible all -m ping
+ansible all -m command -a uptime
+
+
+
+
+ 
+
+
+
+
+
+
+  
